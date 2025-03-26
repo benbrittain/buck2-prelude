@@ -300,7 +300,8 @@ _INPUTS = {
 def _get_reloc_model(link_strategy: LinkStrategy, target_os_type: OsLookup) -> RelocModel:
     if target_os_type.platform == "windows":
         return RelocModel("pic")
-    if link_strategy == LinkStrategy("static"):
+    if target_os_type.platform == "unknown":
+        #bwb: wasm!
         return RelocModel("static")
     return RelocModel("pic")
 

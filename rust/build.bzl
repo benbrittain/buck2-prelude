@@ -1007,6 +1007,8 @@ def _compute_common_args(
     elif crate_type == CrateType("dylib") and toolchain_info.advanced_unstable_linking:
         # Use standard library dylibs from the implicit sysroot.
         prefer_dynamic_flags = ["-Cprefer-dynamic=yes"]
+    elif crate_type == CrateType("cdylib"):
+        prefer_dynamic_flags = ["-Cprefer-dynamic=yes"]
     else:
         # Use standard library rlibs from the implicit sysroot.
         prefer_dynamic_flags = ["-Cprefer-dynamic=no"]  # (the default)
