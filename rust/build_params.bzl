@@ -307,10 +307,10 @@ _INPUTS = {
 ]
 
 def _get_reloc_model(rule: RuleType, link_strategy: LinkStrategy, target_os_type: OsLookup) -> RelocModel:
+    if target_os_type.cpu == "wasm32":
+        return RelocModel("static")
     if target_os_type.os == Os("windows"):
         return RelocModel("pic")
-    if link_strategy == LinkStrategy("static"):
-        return RelocModel("static")
     if rule == RuleType("binary"):
         return RelocModel("pie")
     return RelocModel("pic")

@@ -21,7 +21,7 @@ ScriptLanguage = enum(
 
 OsLookup = provider(fields = {
     "cpu": str | None,
-    "os": Os,
+    "os": Os | None,
     "script": ScriptLanguage,
 })
 
