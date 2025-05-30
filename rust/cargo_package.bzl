@@ -81,13 +81,20 @@ def apply_platform_attrs(
         template = templates.get(platform, None)
         if template:
             for attr, value in attrs.items():
-                default_value = {} if type(value) == type({}) else [] if type(value) == type([]) else None
+                if attr == "deps":
+                    val = []
+                elif attr == "named_deps":
+                    val = {}
+                elif attr == "env":
+                    val = {}
+                else:
+                    val = None
+                default_value = {} if type(value) == type({}) else [] if type(value) == type([]) else val
                 conditional_value = selects.apply(template, lambda cond: value if cond else default_value)
                 if attr in combined_attrs:
                     combined_attrs[attr] = combined_attrs[attr] + conditional_value
                 else:
                     combined_attrs[attr] = conditional_value
-
     return combined_attrs
 
 def _cargo_rust_binary(name, platform = {}, **kwargs):
